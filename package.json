@@ -1,0 +1,10 @@
+{
+  "name": "insomnia-plugin-sse",
+  "version": "0.0.1",
+  "private": true,
+  "insomnia": {
+    "name": "sse",
+    "description": ""
+  },
+  "main": "main.js"
+}
