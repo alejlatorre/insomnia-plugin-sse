@@ -1,10 +1,32 @@
 {
   "name": "insomnia-plugin-sse",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
+  "main": "main.js",
+  "type": "commonjs",
+  "files": [
+    "*.js",
+    "*.json"
+  ],
   "insomnia": {
     "name": "sse",
-    "description": ""
+    "displayName": "SSE",
+    "description": "Perform SSE requests using any HTTP method (GET, POST, etc.).",
+    "publisher": {
+      "name": "4L3J",
+      "icon": "https://github.com/alejlatorre.png"
+    }
   },
-  "main": "main.js"
+  "keywords": [
+    "sse",
+    "insomnia",
+    "plugin",
+    "http"
+  ],
+  "homepage": "https://github.com/alejlatorre/insomnia-plugin-sse",
+  "description": "This plugin allows you to make SSE (Server-Sent Events) requests directly in Insomnia, including support for POST, PUT, and other HTTP methods.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Latorre <alej669@gmail.com>"
 }
