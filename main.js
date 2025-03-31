@@ -11,6 +11,14 @@ const SSE_READYSTATE = {
   CLOSED: 2,
 }
 
+const SSE_STATUS_MESSAGES = {
+  CONNECTING: { color: 'orange', message: '🔄 Connecting...' },
+  OPEN: { color: 'green', message: '✅ Connection established' },
+  ERROR: { color: 'red', message: '❌ Error: ' },
+  RECONNECTING: { color: 'orange', message: '🔄 Reconnecting...' },
+  COMPLETE: { color: 'green', message: '✅ Stream completed' },
+}
+
 const SSE_CONFIG = {
   DELAY_MS: 0,
   RECONNECT_INTERVAL_MS: 3000,
@@ -420,32 +428,45 @@ function handleSSERequest(context) {
     const source = new CustomEventSource(url, method, headers, body)
     const sseBox = createFloatingSSEBox(document, source)
 
+    // Set initial status
+    updateStatusMessage(
+      sseBox,
+      SSE_STATUS_MESSAGES.CONNECTING.message,
+      SSE_STATUS_MESSAGES.CONNECTING.color
+    )
+
     // Set up event listeners
     source.addEventListener('open', () => {
-      updateStatusMessage(sseBox, '✅ Connection established', 'green')
+      updateStatusMessage(
+        sseBox,
+        SSE_STATUS_MESSAGES.OPEN.message,
+        SSE_STATUS_MESSAGES.OPEN.color
+      )
     })
 
     source.addEventListener('error', (error) => {
       updateStatusMessage(
         sseBox,
-        `❌ Error: ${error.status} ${error.statusText ?? ''}`,
-        'red'
+        `${SSE_STATUS_MESSAGES.ERROR.message} ${error.status} ${
+          error.statusText ?? ''
+        }`,
+        SSE_STATUS_MESSAGES.ERROR.color
       )
     })
 
     source.addEventListener('reconnecting', (event) => {
       updateStatusMessage(
         sseBox,
-        `🔄 Reconnecting (${event.attempt}/${event.maxAttempts})...`,
-        'orange'
+        `${SSE_STATUS_MESSAGES.RECONNECTING.message} (${event.attempt}/${event.maxAttempts})...`,
+        SSE_STATUS_MESSAGES.RECONNECTING.color
       )
     })
 
     source.addEventListener('connectionFailed', () => {
       updateStatusMessage(
         sseBox,
-        '❌ Connection failed permanently after multiple attempts',
-        'red'
+        `${SSE_STATUS_MESSAGES.CONNECTION_FAILED.message}`,
+        SSE_STATUS_MESSAGES.CONNECTION_FAILED.color
       )
 
       // Auto-close the box after showing the failure message
@@ -458,7 +479,11 @@ function handleSSERequest(context) {
 
     // Handle stream completion - automatically remove the SSE box
     source.addEventListener('complete', () => {
-      updateStatusMessage(sseBox, '✅ Stream completed', 'green')
+      updateStatusMessage(
+        sseBox,
+        SSE_STATUS_MESSAGES.COMPLETE.message,
+        SSE_STATUS_MESSAGES.COMPLETE.color
+      )
 
       // Auto-close the box after a brief delay to show the completion message
       setTimeout(() => {

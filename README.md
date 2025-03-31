@@ -1,35 +1,30 @@
 # Insomnia Plugin SSE
 
-This plugin allows you to make SSE (Server-Sent Events) requests directly in Insomnia, including support for POST, PUT, and other HTTP methods.
+This plugin enables Server-Sent Events (SSE) connections in Insomnia. It supports all HTTP methods (GET, POST, PUT, DELETE, etc.) by leveraging custom headers to trigger SSE behavior.
 
 ## Usage
 
-There are two ways to use this plugin:
+To use this plugin:
 
-1. Create a request with the custom HTTP method `SSE` (this will use GET)
-2. Use any HTTP method (GET, POST, PUT, etc.) and add the header `x-sse` with a truthy value
-
-You can specify the event name in the `x-event-name` header. If not specified, it will listen to "message" events.
-
-**Note that the Insomnia plugin API doesn't allow us to disable the initial request. You will receive a dummy request followed by the SSE connection.**
+- Create a request using your desired HTTP method.
+- Add the header `x-sse` with a truthy value to activate the SSE connection.
+- Optionally, specify the event name with the header `x-event-name` (defaults to "message").
 
 ## Examples
 
-### Using SSE with GET
+### Using SSE
 
-Create a GET request, add the `x-sse` header, and send the request.
-
-### Using SSE with POST or other methods
-
-Simply set your request method to POST, add the body content as usual, and add the `x-sse` header.
+1. Create a request (GET, POST, PUT, etc.).
+2. Include the header `x-sse: true`.
+3. Optionally, include `x-event-name: <event>` to filter events.
+4. Send the request. The plugin manages the SSE connection automatically.
 
 ## Features
 
-- Support for all HTTP methods (GET, POST, PUT, DELETE, etc.)
-- Custom headers support
-- Request body support for non-GET methods
-- Event filtering via `x-event-name` header
+- Supports all HTTP methods.
+- Custom header configuration for SSE activation and event filtering.
+- Request body support for non-GET methods.
 
 ## Acknowledgements
 
-This idea was originally implemented in [insomnia-plugin-skugga-sse](https://github.com/BinarSkugga/insomnia-plugin-skugga-sse) but since I have implemented a lot of changes with other patterns, I decided to create a new plugin.
+This plugin is inspired by [insomnia-plugin-skugga-sse](https://github.com/BinarSkugga/insomnia-plugin-skugga-sse) but since I have reestructured the code and added lot of changes with other patterns, I decided to create a new one.
