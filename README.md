@@ -25,6 +25,11 @@ To use this plugin:
 - Custom header configuration for SSE activation and event filtering.
 - Request body support for non-GET methods.
 
+## In progress
+
+- The target is to provide a custom event message formatter based on message type(s) that will be printed in a container for debugging purposes
+- It will be added in the SSE request type
+
 ## Acknowledgements
 
 This plugin is inspired by [insomnia-plugin-skugga-sse](https://github.com/BinarSkugga/insomnia-plugin-skugga-sse) but since I have reestructured the code and added lot of changes with other patterns, I decided to create a new one.
